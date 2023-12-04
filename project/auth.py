@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
 import bcrypt
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 
 from . import db
 from .models import User
@@ -33,14 +33,12 @@ def signup_post():
         return redirect(url_for("auth.signup"))
 
     # create a new user with the form data. Hash the password so the plaintext version isn't saved.
-
-    # generate salt for password
-    salt = bcrypt.gensalt()
-
     new_user = User(
         email=email,
         username=request.form.get("username"),
-        password=bcrypt.hashpw(bytes(request.form.get("password"), "utf-8"), salt),
+        password=bcrypt.hashpw(
+            bytes(request.form.get("password"), "utf-8"), bcrypt.gensalt()
+        ),
         firstname=request.form.get("firstname"),
         lastname=request.form.get("lastname"),
     )
