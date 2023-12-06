@@ -41,4 +41,9 @@ def create_app():
 
     app.register_blueprint(main_blueprint)
 
+    # blueprint for the attack part of the app
+    from .attack import attack as attack_blueprint
+
+    app.register_blueprint(attack_blueprint)
+
     return app

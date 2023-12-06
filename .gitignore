@@ -10,3 +10,4 @@ venv/
 flask_app/
 .env
 *.db
+/project/static
